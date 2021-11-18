@@ -4,21 +4,21 @@ from . import serializers
 from .throttling import AuthTokenThrottler, CodeTokenThrottler
 
 
-class ObtainCodeToken(jwt_views.ObtainJSONWebToken):
+class ObtainCodeToken(jwt_views.ObtainJSONWebTokenView):
     serializer_class = serializers.CodeTokenSerializer
     throttle_classes = [CodeTokenThrottler]
 
 
-class ObtainAuthToken(jwt_views.ObtainJSONWebToken):
+class ObtainAuthToken(jwt_views.ObtainJSONWebTokenView):
     serializer_class = serializers.AuthTokenSerializer
     throttle_classes = [AuthTokenThrottler]
 
 
-class RefreshAuthToken(jwt_views.RefreshJSONWebToken):
+class RefreshAuthToken(jwt_views.RefreshJSONWebTokenView):
     pass
 
 
-class VerifyAuthToken(jwt_views.VerifyJSONWebToken):
+class VerifyAuthToken(jwt_views.VerifyJSONWebTokenView):
     pass
 
 

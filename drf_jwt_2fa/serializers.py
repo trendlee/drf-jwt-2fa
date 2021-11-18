@@ -1,7 +1,5 @@
 from django.contrib.auth import authenticate, get_user_model
 from rest_framework import exceptions, serializers
-from rest_framework_jwt.compat import Serializer as JwtSerializer
-from rest_framework_jwt.serializers import PasswordField
 from rest_framework_jwt.settings import api_settings as jwt_settings
 
 from .token_manager import CodeTokenManager
@@ -9,6 +7,22 @@ from .utils import check_user_validity
 
 jwt_encode_handler = jwt_settings.JWT_ENCODE_HANDLER
 jwt_payload_handler = jwt_settings.JWT_PAYLOAD_HANDLER
+
+
+class PasswordField(serializers.CharField):
+
+    def __init__(self, *args, **kwargs):
+        if 'style' not in kwargs:
+            kwargs['style'] = {'input_type': 'password'}
+        else:
+            kwargs['style']['input_type'] = 'password'
+        super(PasswordField, self).__init__(*args, **kwargs)
+
+
+class JwtSerializer(serializers.Serializer):
+    @property
+    def object(self):
+        return self.validated_data
 
 
 class Jwt2faSerializer(JwtSerializer):
