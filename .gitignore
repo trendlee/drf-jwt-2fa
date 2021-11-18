@@ -9,3 +9,4 @@ requirements-local.*
 .coverage
 /*cache
 *,cover
+.idea/
